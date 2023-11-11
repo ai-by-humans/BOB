@@ -15,3 +15,7 @@ git clone https://github.com/ai-by-humans/BOB
 cd BOB
 pip install -r requirements.txt
 ```
+```
+run Conda.bat
+create a new evironment named "bob" using python 3.10
+```
