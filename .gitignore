@@ -1,0 +1,4 @@
+# Ignore these files and directories
+bob.bat
+env/
+installers/

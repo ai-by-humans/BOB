@@ -1,12 +1,11 @@
 # BOB (Builder of Bots)
 
 ## Introduction
-BOB, which stands for Builder of Bots, is a Python-based tool designed for developers working on large language models (LLMs). It facilitates interaction with a local HTTP server that emulates OpenAI's API, focusing on compatibility with the Chat Completion API. This tool is ideal for offline development and testing of bots.
+BOB, standing for Builder of Bots, is a Python-based tool designed for developers working with large language models (LLMs). It enables interaction with a local HTTP server, hosted in LM Studio, that emulates OpenAI's API. This setup focuses on compatibility with the Chat Completion API and is ideal for offline development and testing of bots, leveraging the capabilities of LM Studio for local server management and model interaction.
 
 ## Features
-- **API Emulation**: Mimics OpenAI's API, allowing for a seamless transition from a cloud-based to a local development environment.
-- **Chat Completion API Compatibility**: Supports request and response formats in line with OpenAI's specifications, easing the learning curve for developers.
-- **Local Model Integration**: Tailored for local model use, enabling efficient offline development and testing.
+- **Chat Completion API Compatibility**: Supports request and response formats in line with OpenAI's Chat Completion API, facilitating a familiar development workflow.
+- **Local Model Integration**: Optimized for local model use within LM Studio, enabling efficient development and testing offline.
 
 ## Installation
 To install BOB, clone the repository and set up the environment:
