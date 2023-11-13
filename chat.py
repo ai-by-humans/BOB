@@ -1,44 +1,58 @@
 import os
 import openai
+import json
 
-# Configure the OpenAI local server
+def load_conversation_setup(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+# Load conversation setup from the JSON file
+conversation_setup = load_conversation_setup('conversation_setup.json')
+
+def print_welcome_message(setup):
+    print("\nWelcome to the AI Chat!")
+    print(f"Today's scenario: {setup['scenario']}")
+    print(f"Rules: {setup['rules']}")
+    print("\nType 'exit', 'quit', or 'stop' to end the chat.")
+    print("Let's start the conversation!\n")
+
+# Configure the OpenAI server
 openai.api_base = "http://localhost:1234/v1"
 openai.api_key = os.getenv('OPENAI_API_KEY', 'NULL')
 
-# Initialize message history
-message_history = [
-    {"role": "system", "content": "Role-play as a real human in conversations with the user."},
-]
+# Print the welcome message with the loaded scenario and rules
+print_welcome_message(conversation_setup)
 
+# User input
+user_name = input("Please enter your name: ")
+
+# Prepare the system instruct message from the loaded data
+system_instruct = f"<s>[INST] You are {conversation_setup['char']['name']} ({conversation_setup['char']['traits']}). You must follow the scenario: {conversation_setup['scenario']}, and adhere to these rules: {conversation_setup['rules']}. [/INST]"
+
+message_history = [{"role": "system", "content": system_instruct}]
 
 # Main loop to keep the chat going
 while True:
-    # Get user input
-    user_input = input("You: ")
+    user_input = input(f"{user_name}: ")
 
-        # Check if the user wants to exit
     if user_input.lower() in ['exit', 'quit', 'stop']:
         print("Exiting the chat.")
         break
-    
-    # Append user input to the message history
-    message_history.append({"role": "user", "content": user_input})
-    
+
+    formatted_input = f"<s>[INST] {user_input} [/INST]"
+    message_history.append({"role": "user", "content": formatted_input})
+
     try:
-        # Perform the API call to create a chat completion
-        completion = openai.ChatCompletion.create(
-            model="your-model-name",  # Replace 'your-model-name' with the model name your local server expects
+        chat_completion = openai.ChatCompletion.create(
+            model="mistralai/Mistral-7B-Instruct-v0.1",
+            temperature=1,
+            max_tokens=1024,
             messages=message_history
         )
-        
-        # Extract the message from the response and print it
-        message = completion.choices[0].message['content']
-        print(f"AI: {message}")
-        
-        # Append AI's response to the history
+        message = chat_completion.choices[0].message['content']
+        print(f"AI: {message.strip()}\n")
         message_history.append({"role": "assistant", "content": message})
-        
+
     except Exception as e:
-        # Handle any errors that occur during the API call
         print(f"An error occurred: {e}")
-        break  # Break the loop if an error occurs
+        break

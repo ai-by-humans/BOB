@@ -16,6 +16,11 @@ cd BOB
 pip install -r requirements.txt
 ```
 ```
-run Conda.bat
+run runme.bat
 create a new evironment named "bob" using python 3.10
+
+Open bob.bat
+pip install -r requirements.txt
+to run type:
+python chat.py
 ```
